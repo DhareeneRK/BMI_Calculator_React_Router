@@ -206,21 +206,46 @@ export default Home;
 
 # BMICalculator.js
 ```
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Home() {
+function BMICalculator() {
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!height || !weight || height <= 0 || weight <= 0) {
+      alert("Enter valid height and weight");
+      return;
+    }
+    navigate(`/result?height=${height}&weight=${weight}`);
+  };
+
   return (
     <div className="container">
-      <h2>BMI Calculator</h2>
-      <Link to="/bmi">
-        <button>Start Calculating</button>
-      </Link>
+      <h2>Enter Your Details</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="number"
+          placeholder="Height (cm)"
+          value={height}
+          onChange={(e) => setHeight(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Weight (kg)"
+          value={weight}
+          onChange={(e) => setWeight(e.target.value)}
+        />
+        <button type="submit">Calculate BMI</button>
+      </form>
     </div>
   );
 }
 
-export default Home;
+export default BMICalculator;
 
 ```
 
@@ -262,6 +287,10 @@ export default Result;
 
 ```
 ## OUTPUT
+![web6 1](https://github.com/user-attachments/assets/68997e63-1ad4-4e5b-b46b-9a4e026e935d)
+![web6 2](https://github.com/user-attachments/assets/d8cdf303-aba3-447e-a050-d40dc2135350)
+![web6 3](https://github.com/user-attachments/assets/4dc6300a-b820-4883-8ade-21ec6a2b37c7)
+![web6 4](https://github.com/user-attachments/assets/70ed579c-fda5-484f-8f85-71af01f005e2)
 
 
 
