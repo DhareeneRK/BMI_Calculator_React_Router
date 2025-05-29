@@ -1,5 +1,7 @@
 # Ex06 BMI Calculator
-## Date: 
+## Date: 27-05-2025
+## Name: Dhareene R K
+## Reg No: 212222040035
 
 ## AIM
 To develop a responsive and interactive Body Mass Index (BMI) Calculator using React that allows users to input their height and weight, and calculates their BMI to categorize their health status (e.g., Underweight, Normal, Overweight, Obese).
@@ -64,9 +66,201 @@ Create routing structure with react-router-dom:
 <li>Add styling using CSS or Tailwind.</li>
 
 ## PROGRAM
+#  App.js
+```
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import BMICalculator from './BMICalculator';
+import Result from './Result';
+import './App.css';
 
+function App() {
+  return (
+    <Router>
+      <div className="app">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/bmi" element={<BMICalculator />} />
+          <Route path="/result" element={<Result />} />
+        </Routes>
 
+        {/* Footer added below */}
+        <footer className="footer">
+          Dhareene R K (212222040035)
+        </footer>
+      </div>
+    </Router>
+  );
+}
 
+export default App;
+
+```
+# App.css
+```
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #ffecd2, #fcb69f);
+  color: #222;
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  margin: 50px auto;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.container:hover {
+  transform: scale(1.02);
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: none;
+  border-radius: 10px;
+  background-color: #fcefee;
+  font-size: 16px;
+}
+
+input[type="number"]:focus {
+  outline: none;
+  background-color: #fff0f5;
+  box-shadow: 0 0 5px #ff9a9e;
+}
+
+button {
+  background: linear-gradient(to right, #ff758c, #ff7eb3);
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  margin-top: 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: linear-gradient(to right, #ff6a95, #f94d7d);
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #ff5e78;
+}
+
+.result {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #444;
+}
+
+.footer {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: auto;
+  font-size: 14px;
+}
+
+```
+# Home.js
+```
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+function Home() {
+  return (
+    <div className="container">
+      <h2>BMI Calculator</h2>
+      <Link to="/bmi">
+        <button>Start Calculating</button>
+      </Link>
+    </div>
+  );
+}
+
+export default Home;
+
+```
+
+# BMICalculator.js
+```
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+function Home() {
+  return (
+    <div className="container">
+      <h2>BMI Calculator</h2>
+      <Link to="/bmi">
+        <button>Start Calculating</button>
+      </Link>
+    </div>
+  );
+}
+
+export default Home;
+
+```
+
+# Result.js
+```
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+function Result() {
+  const query = new URLSearchParams(useLocation().search);
+  const height = parseFloat(query.get('height'));
+  const weight = parseFloat(query.get('weight'));
+  const navigate = useNavigate();
+
+  if (!height || !weight) {
+    return <div className="container">Invalid input</div>;
+  }
+
+  const heightInMeters = height / 100;
+  const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(2);
+
+  let category = '';
+  if (bmi < 18.5) category = 'Underweight';
+  else if (bmi < 24.9) category = 'Normal';
+  else if (bmi < 29.9) category = 'Overweight';
+  else category = 'Obese';
+
+  return (
+    <div className="container">
+      <h2>Your BMI Result</h2>
+      <div className="result">BMI: {bmi}</div>
+      <div className="result">Category: {category}</div>
+      <button onClick={() => navigate('/bmi')}>Calculate Again</button>
+    </div>
+  );
+}
+
+export default Result;
+
+```
 ## OUTPUT
 
 
